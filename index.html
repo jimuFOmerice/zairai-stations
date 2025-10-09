@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/vue"></script>
+<script src="position.js"></script>
+<script src="station.js"></script>
+<script type="text/javascript">
+	function nyaan(){
+		const nyaan={
+			data(){
+				return{
+					message: 'Nyaan2'
+				}
+			},
+			methods:{
+				success(pos){
+					const crd=pos.coords;
+					let location='{"latitude":'+pos.coords.latitude+',"longitude":'+pos.coords.longitude+'}'
+					let now=JSON.parse(location);
+					let dic=JSON.parse(Stations);
+					let minimum=Number.MAX_VALUE;
+					let nearest;
+					for(station of dic.Stations){
+						distance=getDistance(now,station);
+						if(distance<minimum){
+							minimum=distance;
+							nearest=station;
+							console.log(nearest.name)
+						}
+					}
+					this.message=nearest.name;
+				},
+				fail(pos){
+					console.log("failed:"+pos.code);
+				},
+				getNearestStation(){
+					const options = {
+						  enableHighAccuracy: false,
+						  timeout: 5000,
+						  maximumAge: 5000,
+						};
+					console.log("nyaaan");
+					navigator.geolocation.getCurrentPosition(this.success,this.fail,options);
+				}
+			}
+		}
+		
+		Vue.createApp(nyaan).mount('#nyaanx');
+	}
+</script>
+</head>
+<body onload="javascript:nyaan();">
+<div id="nyaanx">
+	{{ message }}
+<br>
+<button @click="getNearestStation">nyaan</button>
+</div>
+
+</body>
+</html>
