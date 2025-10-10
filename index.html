@@ -25,7 +25,6 @@
 						if(distance<minimum){
 							minimum=distance;
 							nearest=station;
-							console.log(nearest.name)
 						}
 					}
 					this.message=nearest.name;
@@ -40,6 +39,7 @@
 						  maximumAge: 5000,
 						};
 					console.log("nyaaan");
+					this.message="計算中...";
 					navigator.geolocation.getCurrentPosition(this.success,this.fail,options);
 				}
 			}
@@ -51,7 +51,7 @@
 </head>
 <body onload="javascript:nyaan();">
 <div id="nyaanx">
-	{{ message }}
+<span v-text="message"></span>
 <br>
 <button @click="getNearestStation">nyaan</button>
 </div>
