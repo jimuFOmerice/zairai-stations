@@ -44,8 +44,8 @@
     }
 
     .board.jr {
-      background: #1a7a3c;
-      border: 6px solid #1a7a3c;
+      background: #ffffff;
+      border: 6px solid #ffffff;
       outline: 3px solid #ffffff40;
     }
 
@@ -75,7 +75,7 @@
     }
 
     .neighbor-label {
-      color: #ffffffaa;
+      color: #000000;
       font-size: 0.65rem;
       letter-spacing: 0.1em;
     }
@@ -87,7 +87,7 @@
     }
 
     .neighbor-name {
-      color: #ffffff;
+      color: #000000;
       font-size: clamp(0.9rem, 2.5vw, 1.25rem);
       font-weight: 500;
       text-align: center;
@@ -119,14 +119,8 @@
       padding: 8px 0;
     }
 
-    .station-ruby {
-      color: #ffffffcc;
-      font-size: clamp(0.75rem, 2vw, 1rem);
-      letter-spacing: 0.25em;
-    }
-
     .station-name {
-      color: #ffffff;
+      color: #000000;
       font-size: clamp(2.2rem, 7vw, 4.5rem);
       font-weight: 700;
       letter-spacing: 0.05em;
@@ -134,23 +128,41 @@
       text-align: center;
     }
 
-    .station-romaji {
-      color: #ffffffcc;
+    .station-distance {
+      color: #000000;
       font-size: clamp(0.75rem, 2vw, 1.1rem);
       letter-spacing: 0.18em;
     }
 
     /* 下部ライン */
     .board .bottom-bar {
-      background: #ffffff;
-      height: 6px;
+      display:flex;
+      background: #008803;
+      justify-content:center
+      height: 36px;
     }
 
-    .board.metro .bottom-bar,
-    .board.hankyu .bottom-bar {
-      background: #ffffff30;
-      height: 4px;
-    }
+	.nyaan-next {
+	    display:flex;
+		color:#ffffff;
+		width:33%;
+		height:36px;
+        justify-content:center;
+		align-items:center;
+	}
+	.nyaan-center{
+		display:flex;
+		width:33%;
+        justify-content:center;
+	}
+	.nyaan-prev {
+	    display:flex;
+		color:#ffffff;
+		width:33%;
+		height:36px;
+        justify-content:center;
+		align-items:center;
+	}
 
 </style>
 <script src="https://unpkg.com/vue"></script>
@@ -183,8 +195,9 @@
 					}
 					this.message=nearest.name;
 					this.next=nearest.next;
-					this,prev=nearest.prev;
+					this.prev=nearest.prev;
 					this.distance="("+Math.round(minimum*10)/10+"km)";
+					this.address="(東京都千代田区)"
 					this.isDisplay=true;
 				},
 				fail(pos){
@@ -217,26 +230,22 @@
     <div class="top-bar"></div>
     <div class="board-main">
       <div class="neighbor" id="prev-area">
-        <div class="neighbor-label">←</div>
-        <div class="neighbor-name empty-text" id="prev-name-disp"><span v-text="next"></span> </div>
-        <div class="neighbor-ruby" id="prev-ruby-disp"></div>
-        <div class="neighbor-ruby" id="prev-en-disp"></div>
+        <div class="neighbor-label"></div>
+        <div class="neighbor-name empty-text" id="prev-name-disp"></div>
       </div>
       <div class="divider"></div>
       <div class="center">
-        <div class="station-ruby" id="curr-ruby-disp"></div>
         <div class="station-name" id="curr-name-disp"><span v-text="message"></span> </div>
-        <div class="station-romaji" id="curr-en-disp"><span v-text="distance"></span></div>
+        <div class="station-address" id="curr-en-disp"><span v-text="address"></span></div>
+        <div class="station-distance" id="curr-en-disp"><span v-text="distance"></span></div>
       </div>
       <div class="divider"></div>
       <div class="neighbor" id="next-area">
-        <div class="neighbor-label">→</div>
-        <div class="neighbor-name empty-text" id="next-name-disp"><span v-text="prev"></span> </div>
-        <div class="neighbor-ruby" id="next-ruby-disp"></div>
-        <div class="neighbor-ruby" id="next-en-disp"></div>
+        <div class="neighbor-label"></div>
+        <div class="neighbor-name empty-text" id="next-name-disp"></div>
       </div>
     </div>
-    <div class="bottom-bar"></div>
+    <div class="bottom-bar"><span class="nyaan-next" v-text="next"></span><span class="nyaan-center"> </span><span class="nyaan-prev" v-text="prev"></span></div>
   </div>
 </div>
 </div>
