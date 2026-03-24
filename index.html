@@ -5,6 +5,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
+      font-size:24px;
       background: #1a1a2e;
       min-height: 100vh;
       display: flex;
@@ -135,12 +136,21 @@
     }
 
     /* 下部ライン */
-    .board .bottom-bar {
+    .board .bottom-bar{
       display:flex;
-      background: #008803;
       justify-content:center
       height: 36px;
     }
+
+	.east{
+		background: #008803;
+	}
+	.central{
+		background: #ED6D00;
+	}
+	.west{
+		background: #0169B7;
+	}
 
 	.nyaan-next {
 	    display:flex;
@@ -197,8 +207,11 @@
 					this.next=nearest.next;
 					this.prev=nearest.prev;
 					this.distance="("+Math.round(minimum*10)/10+"km)";
-					this.address="(東京都千代田区)"
+					this.address=nearest.address;
 					this.isDisplay=true;
+					if(nearest.company=="east") this.isEast=true;
+					else if(nearest.company=="central") this.isCentral=true;
+
 				},
 				fail(pos){
 					this.message="エラーが発生しました。";
@@ -245,7 +258,7 @@
         <div class="neighbor-name empty-text" id="next-name-disp"></div>
       </div>
     </div>
-    <div class="bottom-bar"><span class="nyaan-next" v-text="next"></span><span class="nyaan-center"> </span><span class="nyaan-prev" v-text="prev"></span></div>
+    <div :class="isEast?'bottom-bar east':isCentral?'bottom-bar central':'bottom-bar west'" id="bottom-bar"><span class="nyaan-next" v-text="next"></span><span class="nyaan-center"> </span><span class="nyaan-prev" v-text="prev"></span></div>
   </div>
 </div>
 </div>
